@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 
-interface IPokemon {
+export interface PokemonProps {
   name: string;
   weight: number;
   src?: string;
 }
 
-class Pokemon extends Component<IPokemon> {
+export interface PokemonState {
+  age: number;
+}
+
+class Pokemon extends Component<PokemonProps, PokemonState> {
   render() {
     const { name, weight, src } = this.props;
 
