@@ -3,6 +3,7 @@ import React from 'react';
 import PokemonList from './PokemonList';
 import Trainer from './Trainer';
 import Filters from './Filters';
+import fetchPokemons from '../utils/fetchPokemon';
 
 export interface PokemonData {
   id: number;
@@ -14,12 +15,13 @@ export interface PokemonData {
   types: any[];
 }
 
-interface AppProps {
-  data: PokemonData[];
-}
+interface AppProps {}
 
 interface AppState {
   isElectric: boolean;
+  isLoading: boolean;
+  data: PokemonData[];
+  bag: PokemonData[];
 }
 
 class App extends React.Component<AppProps, AppState> {
@@ -28,31 +30,56 @@ class App extends React.Component<AppProps, AppState> {
 
     this.state = {
       isElectric: false,
+      isLoading: true,
+      data: [],
+      bag: [],
     };
     this.toggleFilter = this.toggleFilter.bind(this);
+    this.clearBag = this.clearBag.bind(this);
+  }
+
+  componentDidMount() {
+    fetchPokemons().then(data => {
+      this.setState({
+        data,
+        bag: data.length === 0 ? [] : [data[0]],
+        isLoading: false,
+      });
+    });
   }
 
   toggleFilter() {
+    this.setState(state => ({
+      isElectric: !state.isElectric,
+    }));
+  }
+  clearBag() {
     this.setState({
-      isElectric: !this.state.isElectric,
+      bag: [],
     });
   }
 
   render() {
-    const { data } = this.props;
-    const { isElectric } = this.state;
+    const { isElectric, isLoading, data, bag } = this.state;
 
     const displayed = isElectric
       ? data.filter(item => item.types.find(t => t.type.name === 'electric'))
       : data;
 
-    const bag = [data[0]];
-
     return (
       <div className="App">
-        <Trainer name="Romain" address="1 rue des pokemons" bag={bag} />
-        <Filters label="Electric" toggle={this.toggleFilter} />
-        <PokemonList pokemons={displayed} />
+        <Trainer
+          name="Romain"
+          address="1 rue des pokemons"
+          bag={bag}
+          clearBag={this.clearBag}
+        />
+        <Filters
+          label="Electric"
+          isSelected={isElectric}
+          toggle={this.toggleFilter}
+        />
+        {isLoading ? 'loading...' : <PokemonList pokemons={displayed} />}
       </div>
     );
   }

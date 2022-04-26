@@ -1,16 +1,17 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import type { PokemonData } from './App';
 import TrainedPokemon from './TrainedPokemon';
 
-export interface ITrainer {
+export interface TrainerProps {
   name: string;
   address: string;
   bag: PokemonData[];
+  clearBag(): void;
 }
 
-class Trainer extends Component<ITrainer> {
+class Trainer extends PureComponent<TrainerProps> {
   render() {
-    const { name, address, bag } = this.props;
+    const { name, address, bag, clearBag } = this.props;
 
     const instances = bag.map(pokemon => (
       <TrainedPokemon
@@ -25,6 +26,8 @@ class Trainer extends Component<ITrainer> {
       <div className="Trainer">
         <div className="name">{name}</div>
         <div className="address">{address}</div>
+        <button onClick={clearBag}>Vider</button>
+        <ul>{instances}</ul>
       </div>
     );
   }

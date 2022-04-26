@@ -21,6 +21,11 @@ code {
   flex-wrap: wrap;
 }
 
+.selected {
+  background: black;
+  color: white;
+}
+
 .Pokemon,
 .TrainedPokemon {
   flex: 0 0 7rem;
@@ -35,13 +40,17 @@ code {
 
 .Pokemon .name, .TrainedPokemon .name {
   font-size: 1.3rem;
+  text-transform: capitalize;
 }
 
 .Trainer {
   display: flex;
   align-items: baseline;
   background: lightblue;
+}
 
+.Trainer ul {
+  display: flex;
 }
 
 .Trainer .name {

@@ -2,21 +2,26 @@ import React, { Component } from 'react';
 
 export interface FiltersProps {
   label: string;
+  isSelected: boolean;
   toggle(): void;
 }
 
 class Filter extends Component<FiltersProps> {
   render() {
-    const { label, toggle } = this.props;
-    return <button onClick={toggle}>{label}</button>;
+    const { label, toggle, isSelected } = this.props;
+    return (
+      <button className={isSelected ? 'selected' : ''} onClick={toggle}>
+        {label}
+      </button>
+    );
   }
 }
 
 class Filters extends Component<FiltersProps> {
   render() {
-    const { label, toggle } = this.props;
+    const { label, toggle, isSelected } = this.props;
 
-    return <Filter label={label} toggle={toggle} />;
+    return <Filter isSelected={isSelected} label={label} toggle={toggle} />;
   }
 }
 
