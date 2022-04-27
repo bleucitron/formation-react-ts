@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import type { PokemonData } from './App';
+import type { PokemonData } from '../interfaces';
 import TrainedPokemon from './TrainedPokemon';
 
 export interface TrainerProps {

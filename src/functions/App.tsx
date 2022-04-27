@@ -1,55 +1,53 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 
 import PokemonList from './PokemonList';
 import Trainer from './Trainer';
-import type { TrainedPokemonProps } from './TrainedPokemon';
+import type { PokemonData } from '../interfaces';
 import Filters from './Filters';
-import fetchPokemons from '../utils/fetchPokemon';
-
-export interface PokemonData {
-  id: number;
-  name: string;
-  weight: number;
-  sprites: {
-    front_default: string;
-  };
-  types: any[];
-}
+import Counter from './Counter';
+import { fetchAll } from '../utils/fetchPokemon';
+import { added } from '../stores/bag';
 
 function App() {
-  const [isElectric, setIsElectric] = useState(false);
+  const dispatch = useDispatch();
+  const [selected, setSelected] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState<PokemonData[]>([]);
-  const [bag, setBag] = useState<TrainedPokemonProps[]>([]);
 
   useEffect(() => {
-    fetchPokemons().then(data => {
+    fetchAll().then(data => {
       setData(data);
       setIsLoading(false);
     });
   }, []);
 
   function catchPokemon(pokemon: PokemonData) {
-    setBag(bag => [...bag, { id: Date.now(), species: pokemon }]);
+    dispatch(added(pokemon));
   }
 
-  const displayed = isElectric
-    ? data.filter(item => item.types.find(t => t.type.name === 'electric'))
+  function selectType(t: string) {
+    if (selected === t) {
+      setSelected('');
+    } else {
+      setSelected(t);
+    }
+  }
+
+  const types = useMemo(() => {
+    const duplicateTypes = data.map(p => p.types.map(t => t.type.name)).flat();
+    return [...new Set(duplicateTypes)];
+  }, [data]);
+
+  const displayed = selected
+    ? data.filter(item => item.types.find(t => t.type.name === selected))
     : data;
 
   return (
     <div className="App">
-      <Trainer
-        name="Romain"
-        address="1 rue des pokemons"
-        bag={bag}
-        clearBag={() => setBag([])}
-      />
-      <Filters
-        label="Electric"
-        isSelected={isElectric}
-        toggle={() => setIsElectric(e => !e)}
-      />
+      <Trainer name="Romain" address="1 rue des pokemons" />
+      <Counter />
+      <Filters types={types} selected={selected} select={selectType} />
       {isLoading ? (
         'loading...'
       ) : (

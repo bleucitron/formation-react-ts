@@ -3,17 +3,8 @@ import React from 'react';
 import PokemonList from './PokemonList';
 import Trainer from './Trainer';
 import Filters from './Filters';
-import fetchPokemons from '../utils/fetchPokemon';
-
-export interface PokemonData {
-  id: number;
-  name: string;
-  weight: number;
-  sprites: {
-    front_default: string;
-  };
-  types: any[];
-}
+import type { PokemonData } from '../interfaces';
+import { fetchAll } from '../utils/fetchPokemon';
 
 interface AppProps {}
 
@@ -39,7 +30,7 @@ class App extends React.Component<AppProps, AppState> {
   }
 
   componentDidMount() {
-    fetchPokemons().then(data => {
+    fetchAll().then(data => {
       this.setState({
         data,
         bag: data.length === 0 ? [] : [data[0]],

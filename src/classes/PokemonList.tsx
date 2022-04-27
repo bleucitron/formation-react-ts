@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import type { PokemonData } from './App';
+import type { PokemonData } from '../interfaces';
 import Pokemon from './Pokemon';
-import Filters from './Filters';
 
 export interface PokemonListProps {
   pokemons: PokemonData[];

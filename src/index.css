@@ -28,7 +28,8 @@ code {
 
 .Pokemon,
 .TrainedPokemon {
-  flex: 0 0 7rem;
+  /* flex: 0 0 9rem; */
+  width: 9rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -57,4 +58,25 @@ code {
   margin: 1rem;
   color: unset;
   font-size: 1.5rem;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+header .flex {
+  display: flex;
+  gap: 0.5rem;
+}
+
+header a {
+  margin: 0 0.5rem;
+}
+
+a {
+  color: initial;
+  text-decoration: none;
 }

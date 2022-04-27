@@ -1,17 +1,23 @@
 import React from 'react';
-import TrainedPokemon, {
-  type TrainedPokemonProps,
-} from '../functions/TrainedPokemon';
+import { useSelector, useDispatch } from 'react-redux';
+import TrainedPokemon from '../functions/TrainedPokemon';
+
+import { bagSelect } from '../stores';
+import { cleared } from '../stores/bag';
 
 export interface TrainerProps {
   name: string;
   address: string;
-  bag: TrainedPokemonProps[];
-  clearBag(): void;
 }
 
 function Trainer(props: TrainerProps) {
-  const { name, address, bag, clearBag } = props;
+  const { name, address } = props;
+  const bag = useSelector(bagSelect);
+  const dispatch = useDispatch();
+
+  function clear() {
+    dispatch(cleared());
+  }
 
   const instances = bag.map(pokemon => (
     <TrainedPokemon key={pokemon.id} {...pokemon} />
@@ -21,7 +27,7 @@ function Trainer(props: TrainerProps) {
     <div className="Trainer">
       <div className="name">{name}</div>
       <div className="address">{address}</div>
-      <button onClick={clearBag}>Vider</button>
+      <button onClick={clear}>Vider</button>
       <ul>{instances}</ul>
     </div>
   );

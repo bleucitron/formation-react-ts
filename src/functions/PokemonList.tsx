@@ -1,5 +1,5 @@
 import React from 'react';
-import type { PokemonData } from '../classes/App';
+import type { PokemonData } from '../interfaces';
 import Pokemon from './Pokemon';
 
 export interface PokemonListProps {
