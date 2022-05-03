@@ -1,9 +1,8 @@
 import React from 'react';
 // import ReactDOM from 'react-dom';
 import ReactDOM from 'react-dom/client';
-import App from './classes/App';
-
-import data from './_data/pokemon.json';
+import App from './functions/App';
+// import App from './classes/App';
 
 import './reset.css';
 import './index.css';
@@ -13,4 +12,4 @@ import './index.css';
 // React 18:
 const target = document.getElementById('root') as Element;
 const root = ReactDOM.createRoot(target);
-root.render(<App data={data} />);
+root.render(<App />);

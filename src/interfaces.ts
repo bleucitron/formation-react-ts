@@ -1,4 +1,10 @@
+export interface TrainedPokemonData {
+  id: number;
+  species: PokemonData;
+}
+
 export interface PokemonData {
+  catchId?: number;
   id: number;
   name: string;
   weight: number;
@@ -6,4 +12,5 @@ export interface PokemonData {
     front_default: string;
     back_default: string;
   };
+  types: { type: { name: string } }[];
 }
