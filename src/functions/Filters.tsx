@@ -1,17 +1,30 @@
 import React from 'react';
+import Counter from './Counter';
 
 interface FiltersProps {
-  label: string;
-  active: boolean;
-  toggle(): void;
+  labels: string[];
+  active: string;
+  toggle(label: string): void;
 }
 
 function Filters(props: FiltersProps) {
-  const { active, label, toggle } = props;
-  return (
-    <button className={active ? 'active' : ''} onClick={toggle}>
+  const { active, labels, toggle } = props;
+
+  const instances = labels.map(label => (
+    <button
+      key={label}
+      className={active === label ? 'active' : ''}
+      onClick={() => toggle(label)}
+    >
       {label}
     </button>
+  ));
+
+  return (
+    <div className="Filters">
+      {instances}
+      <Counter />
+    </div>
   );
 }
 

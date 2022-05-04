@@ -14,6 +14,7 @@ function PokemonList(props: PokemonListProps): JSX.Element {
   const instances = pokemons.map(pokemon => (
     <Pokemon
       key={pokemon.id}
+      id={pokemon.id}
       name={pokemon.name}
       weight={pokemon.weight}
       src={pokemon.sprites.front_default}

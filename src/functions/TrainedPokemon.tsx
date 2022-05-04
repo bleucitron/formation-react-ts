@@ -1,21 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import type { TrainedPokemonData } from '../interfaces';
+import { useIncrementalNb } from '../utils/hooks';
 
 interface TrainedPokemonProps extends TrainedPokemonData {
   releasePokemon(id: number): void;
 }
 
 function TrainedPokemon(props: TrainedPokemonProps) {
-  const [exp, setExp] = useState(0);
   const [nickname, setNickname] = useState('');
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setExp(e => e + 10);
-    }, 100);
-
-    return () => clearInterval(id);
-  }, []);
+  const [exp, setExp] = useIncrementalNb();
 
   const {
     id,

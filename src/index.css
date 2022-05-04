@@ -21,6 +21,34 @@ code {
 
 .App {}
 
+.Counter {
+  display: flex;
+  justify-content: center;
+}
+
+.Counter .value {
+  font-size: 2rem;
+  margin-inline: 1rem;
+}
+
+.about {
+  margin: 1rem;
+}
+
+nav {
+  padding: 0.5rem;
+}
+
+nav a {
+  margin-inline: 0.5rem;
+}
+
+.Test {
+  text-align: center;
+  font-size: 2rem;
+  padding: 1rem;
+}
+
 .list {
   display: flex;
   flex-wrap: wrap;

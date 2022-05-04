@@ -1,20 +1,27 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 interface PokemonProps {
+  id: number;
   name: string;
   weight: number;
   src?: string;
-  catchPokemon(): void;
+  catchPokemon?(): void;
 }
 
 function Pokemon(props: PokemonProps): JSX.Element {
-  const { name, weight, src, catchPokemon } = props;
+  const { id, name, weight, src, catchPokemon } = props;
+
+  const url = '/pokemon/' + id;
 
   return (
-    <li className="Pokemon" onClick={catchPokemon}>
-      <div className="name">{name}</div>
+    <li className="Pokemon">
+      <div className="name">
+        <Link to={url}>{name}</Link>
+      </div>
       <div className="weight">{weight}</div>
       {src && <img src={src} alt={name} />}
+      <button onClick={catchPokemon}>Attraper</button>
     </li>
   );
 }
